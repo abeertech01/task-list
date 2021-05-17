@@ -9,16 +9,19 @@
       @focus="focusOn"
       @focusout="focusOff"
       placeholder="Add a task"
-      v-model.lazy="task"
+      v-model="task"
+      @keydown.enter="addTask"
     />
   </div>
 </template>
 
 <script>
-import { ref } from "vue";
+import { ref, inject } from "vue";
 
 export default {
   setup() {
+    const store = inject("store");
+
     const tap = ref(false);
     const task = ref("");
 
@@ -34,7 +37,11 @@ export default {
       }
     };
 
-    return { tap, task, focusOn, focusOff };
+    const addTask = function () {
+      store.methods.setTask(task.value);
+    };
+
+    return { store, tap, task, focusOn, focusOff, addTask };
   },
 };
 </script>
@@ -43,7 +50,7 @@ export default {
 @import "../sass/variables.scss";
 
 .input {
-  width: 60%;
+  width: 100%;
   background-color: $green;
   padding: 12px 20px;
   font-size: 20px;

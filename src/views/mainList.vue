@@ -18,7 +18,7 @@ export default {
 @import "../sass/variables.scss";
 
 .main-list {
-  margin-top: 50px;
+  margin-top: 15px;
   display: flex;
   justify-content: center;
 }
