@@ -23,10 +23,12 @@
 
 <script>
 import { ref, inject } from "vue";
+import { useRouter } from "vue-router";
 
 export default {
   setup() {
     const store = inject("store");
+    const router = useRouter();
 
     const loginOrSignup = ref("Login");
     const instead = ref("Signup instead");
@@ -41,11 +43,20 @@ export default {
       }
     };
 
+    const authButton = function () {
+      if (loginOrSignup.value === "Login") {
+        router.push("/login");
+      } else {
+        router.push("/signup");
+      }
+    };
+
     return {
       store,
       loginOrSignup,
       instead,
       toggleAuth,
+      authButton,
     };
   },
 };

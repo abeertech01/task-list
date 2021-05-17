@@ -2,14 +2,14 @@
   <app-header></app-header>
   <div class="app">
     <auth-comp></auth-comp>
-    <main-list></main-list>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
 import Header from "./components/Header.vue";
 import AuthComp from "./components/AuthComp.vue";
-import mainList from "./views/mainList.vue";
+// import mainList from "./views/mainList.vue";
 
 import { provide } from "vue";
 import store from "@/store";
@@ -17,7 +17,7 @@ import store from "@/store";
 export default {
   components: {
     appHeader: Header,
-    mainList,
+    // mainList,
     AuthComp,
   },
   setup() {
