@@ -10,10 +10,15 @@ const methods = {
   setTask(val) {
     const newTask = {
       id: state.id++,
-      task: val
+      task: val,
+      isDone: false
     }
     state.allTasks.push(newTask);
     console.log(state.allTasks);
+  },
+  makeDone(val) {
+    const elIndex = state.allTasks.findIndex((el) => el.id === val.id);
+    state.allTasks[elIndex].isDone = !state.allTasks[elIndex].isDone;
   }
 }
 

@@ -38,7 +38,10 @@ export default {
     };
 
     const addTask = function () {
-      store.methods.setTask(task.value);
+      if (task.value !== "") {
+        store.methods.setTask(task.value);
+      }
+      task.value = "";
     };
 
     return { store, tap, task, focusOn, focusOff, addTask };
@@ -59,7 +62,6 @@ export default {
 
   .newTask {
     position: relative;
-    bottom: 0px;
     left: 12px;
     border: none;
     outline: none;
