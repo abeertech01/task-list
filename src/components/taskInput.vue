@@ -1,17 +1,22 @@
 <template>
   <div class="input">
-    <i class="far fa-circle" v-if="tap"></i>
-    <i class="fas fa-plus" v-else></i>
-    <input
-      type="text"
-      class="newTask"
-      id="newTask"
-      @focus="focusOn"
-      @focusout="focusOff"
-      placeholder="Add a task"
-      v-model="task"
-      @keydown.enter="addTask"
-    />
+    <div class="signs-div">
+      <i class="far fa-circle" v-if="tap"></i>
+      <i class="fas fa-plus" v-else></i>
+    </div>
+
+    <div class="input-div">
+      <input
+        type="text"
+        class="newTask"
+        id="newTask"
+        @focus="focusOn"
+        @focusout="focusOff"
+        placeholder="Add a task"
+        v-model="task"
+        @keydown.enter="addTask"
+      />
+    </div>
   </div>
 </template>
 
@@ -59,15 +64,16 @@ export default {
   font-size: 20px;
   border-radius: 5px;
   color: white;
+  display: grid;
+  grid-template-columns: 24px auto;
 
   .newTask {
-    position: relative;
-    left: 12px;
+    width: 100%;
+    margin-left: 5px;
     border: none;
     outline: none;
     background: none;
     color: white;
-    font-size: 20px;
   }
 
   .newTask::placeholder {

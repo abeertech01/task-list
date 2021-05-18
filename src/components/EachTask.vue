@@ -1,23 +1,34 @@
 <template>
-  <div class="each-task">
-    <div class="sign-part">
-      <i class="far fa-circle" v-if="!task.isDone" @click="changeSign"></i>
-      <i class="fas fa-check-circle" v-else @click="changeSign"></i>
+  <div class="each-task-page">
+    <div class="each-task">
+      <div class="sign-part">
+        <i class="far fa-circle" v-if="!task.isDone" @click="changeSign"></i>
+        <i class="fas fa-check-circle" v-else @click="changeSign"></i>
+      </div>
+      <div class="task-part">
+        <span class="the-task">{{ task.task }}</span>
+      </div>
+      <!-- <div class="date-part">({{ date }})</div> -->
+      <button class="menu-btn" @click="cMenuOpen">
+        <i class="fas fa-bars"></i>
+      </button>
     </div>
-    <div class="task-part">
-      <span class="the-task">{{ task.task }}</span>
-    </div>
-    <div class="date-part">({{ date }})</div>
+    <context-menu :taskId="task.id" class="context-menu" v-if="cMenu"></context-menu>
   </div>
 </template>
 
 <script>
-import { computed, inject } from "vue";
+import ContextMenu from "./ContextMenu.vue";
+import { ref, computed, inject } from "vue";
 
 export default {
   props: ["task"],
+  components: {
+    ContextMenu,
+  },
   setup(props) {
     const store = inject("store");
+
     const monthNames = [
       "January",
       "February",
@@ -42,15 +53,20 @@ export default {
     });
 
     const changeSign = function () {
-      // const val = {
-      //   id: props.task.id,
-      //   isDone: props.task.isDone,
-      // };
       store.methods.makeDone(props.task);
     };
+
+    const cMenu = ref(false);
+
+    const cMenuOpen = function () {
+      cMenu.value = !cMenu.value;
+    };
+
     return {
       date,
       changeSign,
+      cMenu,
+      cMenuOpen,
     };
   },
 };
@@ -58,6 +74,10 @@ export default {
 
 <style lang="scss">
 @import "../sass/variables.scss";
+
+.each-task-page {
+  position: relative;
+}
 
 .each-task {
   width: 100%;
@@ -68,7 +88,8 @@ export default {
   color: $green;
   margin-bottom: 10px;
   display: grid;
-  grid-template-columns: 22px auto 140px;
+  grid-template-columns: 22px auto 40px;
+  clear: both;
 
   .sign-part {
     i {
@@ -79,13 +100,22 @@ export default {
   .task-part {
     margin-left: 12px;
   }
-  .date-part {
-    padding: 1px 4px;
-    border-radius: 5px;
-    position: relative;
-    bottom: 3px;
+  .menu-btn {
     margin-left: 5px;
-    text-align: center;
+    height: 30px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
   }
+}
+
+.context-menu {
+  position: absolute;
+  right: 70px;
+  top: 12px;
+  z-index: 1;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em,
+    rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em,
+    rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
 }
 </style>
