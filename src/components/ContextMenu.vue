@@ -1,14 +1,32 @@
 <template>
   <div class="menu">
-    <button class="edit">Edit</button>
+    <button class="edit" @click="editIt">Edit</button>
     <button class="date">Date</button>
-    <button class="delete">Delete</button>
+    <button class="delete" @click="deleteIt">Delete</button>
   </div>
 </template>
 
 <script>
+import { inject } from "vue";
+
 export default {
-  // props: ['taskId']
+  props: ["taskId"],
+  setup(props, context) {
+    const store = inject("store");
+
+    const deleteIt = function () {
+      store.methods.deleteTask(props.taskId);
+    };
+
+    const editIt = function () {
+      context.emit("editTask");
+    };
+
+    return {
+      deleteIt,
+      editIt,
+    };
+  },
 };
 </script>
 
@@ -34,9 +52,6 @@ export default {
   display: block;
   width: 100%;
   border: none;
-  // border-bottom: 1px solid $dark;
-  // border-right: 1px solid $dark;
-  // border-left: 1px solid $dark;
   background-color: #eee;
   font-size: 17px;
   font-weight: 500;

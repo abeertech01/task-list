@@ -6,14 +6,25 @@
         <i class="fas fa-check-circle" v-else @click="changeSign"></i>
       </div>
       <div class="task-part">
-        <span class="the-task">{{ task.task }}</span>
+        <span class="the-task" v-if="!inputOn">{{ task.task }}</span>
+        <input
+          type="text"
+          v-else
+          v-model="taskText"
+          @focusout="inputFocusout"
+        />
       </div>
       <!-- <div class="date-part">({{ date }})</div> -->
       <button class="menu-btn" @click="cMenuOpen">
         <i class="fas fa-bars"></i>
       </button>
     </div>
-    <context-menu :taskId="task.id" class="context-menu" v-if="cMenu"></context-menu>
+    <context-menu
+      :taskId="task.id"
+      @editTask="editAll"
+      class="context-menu"
+      v-if="cMenu"
+    ></context-menu>
   </div>
 </template>
 
@@ -52,14 +63,26 @@ export default {
       return cDate + " " + cMonth + " " + cYear;
     });
 
+    const cMenu = ref(false);
+    const taskText = ref("");
+    const inputOn = ref(false);
+
     const changeSign = function () {
       store.methods.makeDone(props.task);
     };
 
-    const cMenu = ref(false);
-
     const cMenuOpen = function () {
       cMenu.value = !cMenu.value;
+    };
+
+    const editAll = function () {
+      inputOn.value = true;
+      taskText.value = props.task.task;
+      cMenu.value = false;
+    };
+
+    const inputFocusout = function () {
+      inputOn.value = false;
     };
 
     return {
@@ -67,6 +90,10 @@ export default {
       changeSign,
       cMenu,
       cMenuOpen,
+      editAll,
+      taskText,
+      inputOn,
+      inputFocusout,
     };
   },
 };
@@ -98,7 +125,19 @@ export default {
   }
 
   .task-part {
+    position: relative;
     margin-left: 12px;
+
+    input {
+      position: absolute;
+      left: 0;
+      // top: -1px;
+      border: none;
+      outline: none;
+      width: 100%;
+      color: white;
+      background: none;
+    }
   }
   .menu-btn {
     margin-left: 5px;

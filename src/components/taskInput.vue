@@ -69,10 +69,10 @@ export default {
 
   .newTask {
     width: 100%;
-    margin-left: 5px;
+    padding-left: 5px;
     border: none;
     outline: none;
-    background: none;
+    background: $green;
     color: white;
   }
 

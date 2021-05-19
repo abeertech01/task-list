@@ -14,11 +14,14 @@ const methods = {
       isDone: false
     }
     state.allTasks.push(newTask);
-    console.log(state.allTasks);
   },
   makeDone(val) {
     const elIndex = state.allTasks.findIndex((el) => el.id === val.id);
     state.allTasks[elIndex].isDone = !state.allTasks[elIndex].isDone;
+  },
+  deleteTask(id) {
+    const elIndex = state.allTasks.findIndex((el) => el.id === id);
+    state.allTasks.splice(elIndex, 1);
   }
 }
 

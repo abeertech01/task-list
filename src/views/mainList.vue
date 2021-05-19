@@ -5,8 +5,8 @@
       :key="task.id"
       :task="task"
     ></each-task>
-    <task-input></task-input>
   </div>
+  <task-input></task-input>
 </template>
 
 <script>
@@ -34,7 +34,8 @@ export default {
 
 .main-list {
   margin-top: 15px;
-  // display: flex;
-  // justify-content: center;
+  margin-bottom: 20px;
+  max-height: 60vh;
+  overflow: auto;
 }
 </style>
