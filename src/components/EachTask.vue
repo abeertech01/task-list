@@ -21,6 +21,7 @@
     </div>
     <context-menu
       :taskId="task.id"
+      :taskDate="task.date"
       @editTask="editAll"
       class="context-menu"
       v-if="cMenu"
@@ -30,7 +31,7 @@
 
 <script>
 import ContextMenu from "./ContextMenu.vue";
-import { ref, computed, inject } from "vue";
+import { ref, inject } from "vue";
 
 export default {
   props: ["task"],
@@ -39,29 +40,6 @@ export default {
   },
   setup(props) {
     const store = inject("store");
-
-    const monthNames = [
-      "January",
-      "February",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      "August",
-      "September",
-      "October",
-      "November",
-      "December",
-    ];
-    const date = computed(() => {
-      const today = new Date();
-      const cDate = today.getDate();
-      const cMonth = monthNames[today.getMonth()];
-      const cYear = today.getFullYear();
-
-      return cDate + " " + cMonth + " " + cYear;
-    });
 
     const cMenu = ref(false);
     const taskText = ref("");
@@ -86,7 +64,6 @@ export default {
     };
 
     return {
-      date,
       changeSign,
       cMenu,
       cMenuOpen,
